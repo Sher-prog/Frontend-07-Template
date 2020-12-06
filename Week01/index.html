@@ -1,0 +1,40 @@
+<style>
+    .cell {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        background-color: green;
+        display: inline-block;
+        border: 1px solid white;
+        vertical-align: middle;
+        text-align: center;
+        font-size: 50px;
+    }
+</style>
+
+<div id="board"></div>
+
+<script>
+    // 2 :x,1:o,0:无
+    let pattern = [
+        [2, 0, 0],
+        [0, 1, 0],
+        [0, 0, 0],
+    ]
+    console.log('pattern', pattern)
+
+    function show() {
+        let board = document.getElementById('board');
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++){
+                const cell = document.createElement('div')
+                cell.classList.add('cell')
+                cell.innerText = pattern[j][i] === 2 ? '❌' : pattern[j][i] === 1 ? '⭕️' : ''
+                board.appendChild(cell)
+            }
+            board.appendChild(document.createElement('br'))
+        }
+    }
+
+    show(pattern)
+</script>
