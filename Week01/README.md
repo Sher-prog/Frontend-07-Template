@@ -25,30 +25,40 @@
 ## 编程技巧
  
 1. 拷贝
-（1）
-`let pattern = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-let copy = JSON.parse(JSON.stringify(pattern))`
-（2）
-`let pattern = [0, 0, 0]
+
+(1)
+```
+let pattern = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+let copy = JSON.parse(JSON.stringify(pattern))
+```
+
+
+(2)
+```
+let pattern = [0, 0, 0]
 let copy = Object.create(pattern)
-`
+```
+
 2. label跳出循环
-`outer: for(let i = 0; i < 3; i++) {
+
+```
+outer: for(let i = 0; i < 3; i++) {
     for(let j = 0; j < 3; j++) {
         break outer
     }
-}`
+}
+```
 
 优点：
-缺点：
 
-3. 在编码中，为了在局部作用域中能够重复使用同一个变量，我们使用了es6中提出的块级作用域{}。
-4. 最后将远程仓库中当周的作业链接，按格式贴到班级仓库对应学习周的issue下面。
-5. 提交issue请务必按照规定格式进行提交，否则作业统计工具将抓取不到你的作业提交记录。 
+
+缺点：
 
 ## 问题记录
 【问题】出现死循环
+
 【原因】写代码不够仔细，对老师的讲解没有吃透。
+
 【解决】写代码1小时，找错3小时。哎呀妈呀，脑瓜疼。
 
 
