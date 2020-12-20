@@ -1,0 +1,154 @@
+<style>
+
+</style>
+
+<div>
+
+</div>
+
+<script>
+    // TODO:使用LL算法构建AST｜LL语法分析（二）Expresstion
+    // 正则里：圆括号表示捕获
+    // 为词法分析而准备的正则
+    // 用或（|）分隔，也就是说每次匹配只会匹配一个或关系的分支里面，给每一个分支起一个名字regexp和dictionary（token名）一一对应
+    const regexp = /([0-9\.]+)|([ \t]+)|([\r\n]+)|(\*)|(\/)|(\+)|(\-)/g;
+    const dictionary = ["Number", "Whitespace", "LineTerminator", "*", "/", "+", "-"];
+
+    // 用正则表达式的exec()不断扫描原字符串内容
+    function* tokenize(source) {
+        // console.log('source',source)
+        let result = null;
+        let lastIndex = 0;
+        do {
+            lastIndex = regexp.lastIndex;
+            result = regexp.exec(source);
+            if (!result) break;
+            // if (regexp.lastIndex - lastIndex > result[0].lastIndex) break;
+            let token = {
+                type: null,
+                value: null,
+            }
+            for (let i = 1; i <= dictionary.length; i++) {
+                if (result[i]) {
+                    token.type = dictionary[i - 1]
+                }
+            }
+            token.value = result[0];
+            yield token;
+            // console.log('result', result)
+        } while (result) 
+        
+        yield {
+            type: 'EOF'
+        }
+    }
+
+    let source = [];
+    for (let token of tokenize("1 + 2 * 5 + 3")) {
+        if (token.type !== "Whitespace" && token.type !== "LineTerminator") {
+            source.push(token);
+        }
+    }
+
+    // 表达式
+    function Expresstion(source) {
+        if(source[0].type === "AdditiveExpression" && source[1] && source[1].type === "EOF"){
+            let node = {
+                type: "Expression",
+                children: [source.shift(), source.shift()]
+            }
+            source.unshift(node);
+            return node;
+        }
+        AdditiveExpresstion(source);
+        return Expresstion(source);
+    }
+    //    加法
+    function AdditiveExpresstion(source) {
+        if (source[0].type === "MultiplicativeExpression") {
+            let node = {
+                type: "AdditiveExpresstion",
+                children: [source[0]]
+            }
+            source[0] = node;
+            return AdditiveExpresstion(source);
+        }
+        if (source[0].type === "AdditiveExpresstion" && source[1] && source[1].type === "+") {
+            let node = {
+                type: "AdditiveExpresstion",
+                operator: "+",
+                children: []
+            }
+            node.children.push(source.shift());
+            node.children.push(source.shift());
+            MultiplicativeExpresstion(source)
+            node.children.push(source.shift());
+            source.unshift(node);
+            return AdditiveExpresstion(source);
+        }
+        if (source[0].type === "AdditiveExpresstion" && source[1] && source[1].type === "-") {
+            let node = {
+                type: "AdditiveExpresstion",
+                operator: "-",
+                children: []
+            }
+            node.children.push(source.shift());
+            node.children.push(source.shift());
+            MultiplicativeExpresstion(source)
+            node.children.push(source.shift());
+            source.unshift(node);
+            return AdditiveExpresstion(source);
+        }
+        if (source[0].type === "AdditiveExpresstion") {
+            return source[0];
+        }
+        MultiplicativeExpresstion(source);
+        // 应该永远都不会执行
+        return AdditiveExpresstion(source);
+    }
+    //    乘法
+    function MultiplicativeExpresstion(source) {
+        // console.log(source)
+        if (source[0].type === "Number") {
+            let node = {
+                type: "MultiplicativeExpression",
+                children: [source[0]]
+            }
+            source[0] = node;
+            return MultiplicativeExpresstion(source);
+        }
+        if (source[0].type === "MultiplicativeExpression" && source[1] && source[1].type === "*") {
+            let node = {
+                type: "MultiplicativeExpression",
+                operator: "*",
+                children: []
+            }
+            node.children.push(source.shift());
+            node.children.push(source.shift());
+            node.children.push(source.shift());
+            source.unshift(node);
+            return MultiplicativeExpresstion(source);
+        }
+        if (source[0].type === "MultiplicativeExpression" && source[1] && source[1].type === "/") {
+            let node = {
+                type: "MultiplicativeExpression",
+                operator: "/",
+                children: []
+            }
+            node.children.push(source.shift());
+            node.children.push(source.shift());
+            node.children.push(source.shift());
+            source.unshift(node);
+            return MultiplicativeExpresstion(source);
+        }
+        if (source[0].type === "MultiplicativeExpression") {
+            return source[0];
+        }
+        // 应该永远都不会执行
+        return MultiplicativeExpresstion(source);
+    }
+
+    // console.log(Expresstion(source));
+    Expresstion(source)
+
+</script>

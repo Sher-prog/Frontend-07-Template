@@ -1,0 +1,34 @@
+<style>
+
+</style>
+
+<div>
+
+</div>
+
+<script>
+    // TODO:使用LL算法构建AST｜正则表达式
+    // 正则里：圆括号表示捕获
+    // 为词法分析而准备的正则
+    // 用或（|）分隔，也就是说每次匹配只会匹配一个或关系的分支里面，给每一个分支起一个名字regexp和dictionary（token名）一一对应
+    const regexp = /([0-9\.]+)|([ \t]+)|([\r\n]+)|(\*)|(\/)|(\+)|(\-)/g;
+    const dictionary = ["Number", "Whitespace", "LineTerminator", "*", "/", "+", "-"];
+
+    // 用正则表达式的exec()不断扫描原字符串内容
+    function tokenize(source) {
+        // console.log('source',source)
+        let result = null;
+        while(true){
+            result = regexp.exec(source);
+            if(!result) break;
+            for (let i = 0; i <= dictionary.length - 1; i++) {
+                if(result[i]){
+                    console.log(dictionary[i - 1])
+                }
+            }
+            console.log('result', result)
+        }
+    }
+
+    tokenize("1024 + 10 * 25")
+</script>

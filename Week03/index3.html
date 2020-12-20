@@ -1,0 +1,61 @@
+<style>
+
+</style>
+
+<div>
+
+</div>
+
+<script>
+    // TODO:使用LL算法构建AST｜LL语法分析（一）
+    // 正则里：圆括号表示捕获
+    // 为词法分析而准备的正则
+    // 用或（|）分隔，也就是说每次匹配只会匹配一个或关系的分支里面，给每一个分支起一个名字regexp和dictionary（token名）一一对应
+    const regexp = /([0-9\.]+)|([ \t]+)|([\r\n]+)|(\*)|(\/)|(\+)|(\-)/g;
+    const dictionary = ["Number", "Whitespace", "LineTerminator", "*", "/", "+", "-"];
+
+    // 用正则表达式的exec()不断扫描原字符串内容
+    function* tokenize(source) {
+        // console.log('source',source)
+        let result = null;
+        let lastIndex = 0;
+        while (true) {
+            lastIndex = regexp.lastIndex;
+            result = regexp.exec(source);
+            if (!result) break;
+            if (regexp.lastIndex - lastIndex > result[0].lastIndex) break;
+            let token = {
+                type: null,
+                value: null,
+            }
+            for (let i = 0; i <= dictionary.length - 1; i++) {
+                if (result[i]) {
+                    token.type = dictionary[i - 1]
+                }
+            }
+            token.value = result[0];
+            yield token;
+            // console.log('result', result)
+        }
+        yield {
+            type: 'EOF'
+        }
+    }
+
+    let source = [];
+    for (const token of tokenize("1024 + 10 * 25")) {
+        if(token.type !== "Whitespace" && token.type !== "LineTerminator" );
+            source.push(token);
+    }
+
+    // 表达式
+    function Expresstion(token) { }
+    //    加法
+    function AdditiveExpresstion(source) { }
+    //    乘法
+    function MultiplicativeExpresstion(source) { 
+        console.log(source)
+    }
+    MultiplicativeExpresstion("10 * 25")
+
+</script>
