@@ -1,0 +1,28 @@
+四则运算：（1+2）*3
+
+终结符：Number + - * / （ ）
+
+非终结符：
+<MultiplicativeExpression>
+    <AddtiveExpression>
+        <BracketExpression>
+
+            BNF:
+            <MultiplicativeExpression>::= <BracketExpression> |
+                    <MultiplicativeExpression> * <BracketExpression> |
+                            <MultiplicativeExpression> / <BracketExpression>
+
+                                    <AddtiveExpression>::= <MultiplicativeExpression> |
+                                            <AddtiveExpression> + <MultiplicativeExpression> |
+                                                    <AddtiveExpression> - <MultiplicativeExpression>
+
+                                                            <BracketExpression>::= <Number> |
+                                                                    (<AddtiveExpression>）
+
+
+
+
+
+
+                                                                        2. 形式语言——用途分类；（1、数据描述语言【JSON，HTML，XAML，SQL，CSS】；2、编程语言【C，C++，Java，C#，Python，Ruby，Perl，Lisp，T-SQL，Clojure，Haskell，Javascript】）
+3. 形式语言——表达方式分类；（1、声明式语言；【JSON，HTML，XAML，SQL，CSS，Lisp，Clojure，Haskell】2、命令型语言【C，C++，Java，C#，Python，Ruby，Perl，Javascript】）
