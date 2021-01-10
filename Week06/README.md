@@ -114,6 +114,52 @@
 5. 
 6. 
 
+## 8.String
+1.  
+2. 
+3. 
+4. 
+5. 
+6. 
+
+## 9.其他类型
+1. Boolean（值：true，false；【true，false都是关键字】）
+2. Null 为空【关键字】关键字不可定义和赋值
+3. undefined 未定义【全局变量，可定义】
+4. void 0； 表示undefined 【void一切都为undefined】
+5. Symbol：作为Object的一个属性名一种用途
+6. js有现有7种基本类型（Number，String，Boolean，Object，Null，undefined，Symbol），算上在制作的BigInt有8中基本类型
+7. Number，String 学习了在内存中表示和分布
+8. Number：IEEE 754规则里规定的浮点数表示方法：float表示方法；
+String：1.ASCII、Unicode字符集；2.UTF编码方式；Object、Symbol
+
+
+## 10.对象的基础知识
+1.  
+2. 
+3. 
+4. 
+5. 
+6. 
+
+## 11.JS中的对象
+1.  运行时，原生对象只需要关心两个部分：1、原型；2、属性（既可以描述状态又可以描述行为——函数）；内存地址的唯一性表示对象的唯一性
+2. js对象是kv对，特点根据key找到value。k值可以是两种类型：Symbol【只能通过变量去引用，唯一性，即使变量相同值也不同】，String【可以猜出来的k】
+3. 属性值：数据属性【用于描述状态，数据属性如果存储函数，也可以用于描述行为】，访问器属性【用于描述行为】
+    1. Data Property：[[value]],writable,enumerable,configurable
+    2. Accessor Property:get,set,enumerable,configurable
+4. 访问属性：特指js里面的点运算符
+5. 当我们访问属性时，如果当前对象没有，则会沿着原型找到原型对象是否有此名称的属性，而原型对象还可能有原型，因此，会有“原型链”这一说法。这一算法保证了，每个对象只需要描述自己和原型的区别即可。
+6. 相关语法和api，分为四个部分【1、2基于原型，3基于类】
+    1. {} . [] Object.defineProperty【基本的对象机制，通过语法去创建对象、访问属性、定义新的属性、改变属性的特征值，是基本的面向对象的能力】
+    2. Object.create【制定原型的前提下创建对象】 / Object.setPrototypeOf【修改一个对象的原型】 / Object.getPrototypyeOf【获取一个对象的原型】【基于原型的对象API：基于原型的描述对象的方法】
+    3. new / class / extends【新语法结构：基于分类的描述方式描述对象】
+    4. new / function / prototype【不要用：不伦不类，长点优点像class basic】
+7. 特殊对象：1、function。除了一般对象的属性和原型，函数对象是一个带[[call]]方法的对象【Typeof结果是function】；2、数组对象；3、    
+8. 双方括号定义的：都是对象内置行为【私有方法，js无法访问，但是运行时存在】；
+9. Host Object【语法支持的特性：】
+10. 语法是语法，运行时是运行时，理论上来说语法允许的运行时都可以；
+
 ## 编程技巧
 1. 拷贝
 
